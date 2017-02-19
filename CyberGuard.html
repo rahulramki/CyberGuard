@@ -1,0 +1,220 @@
+<html>
+<head>
+<style>
+h1 {
+	color: Red;
+	font-family: Agency FB;
+	font-size: 100;
+}
+h2 {
+	color: #3B5C76
+}
+button{
+  margin:auto;
+  display:block;
+}
+
+/* BUTTON STYLES */
+button{
+  padding:16px 32px;
+  font-family:helvetica;
+  font-size:16px;
+  font-weight:100;
+  color:#fff;
+  background: red;
+  border:0;
+  font-weight:100;
+}
+button:hover{
+  background: #3B5C76;
+}
+form {
+   margin-left:auto;
+   margin-right:auto;
+   width:150px;
+}
+table {
+	text-align: center;
+	border: 1px solid black;
+	margin: 0 auto;
+}
+table, th, td{
+	border: 1px solid black;
+	color: white;
+}
+tr:nth-child(even){background-color: #ff2121
+}
+tr:nth-child(odd) { background-color: #3B5C76
+}
+
+</style>
+<title>CyberGuard</title>
+<h1 style="text-align: center">CyberGuard</h1>
+<h2 style="text-align: center">Generate and store passwords</h2>
+<script language="javascript"2>
+function createPW ()
+{
+  var pWord = "";
+  for(var i = 0; i<10; i++)
+  {
+    var option = Math.floor(Math.random()*4);
+    var add = 0;
+    var letter = "";
+    switch(option)
+    {
+      case 0:
+        //Uppercase letter
+        add = Math.floor(Math.random()*26);
+        letter = String.fromCharCode(65 + add);
+        break;
+      case 1:
+        //Lowercase letter
+        add = Math.floor(Math.random()*26);
+        letter = String.fromCharCode(97 + add);
+        break;
+      case 2:
+        //Number
+        add = Math.floor(Math.random()*10);
+        letter = String.fromCharCode(48 + add);
+        break;
+      case 3:
+        var newVal = Math.floor(Math.random()*5); 
+        switch(newVal)
+        {
+          case 0:
+            //Question
+            letter = "?";
+            break;
+          case 1:
+            //Dollar
+            letter = "$";
+            break;
+          case 2:
+          //And
+            letter = "&";
+            break;
+          case 3:
+            //Hashtag
+            letter = "#";
+            break;
+          case 4:
+            //Exclamation
+            letter = "!";
+            break;
+        }
+    }
+    pWord = pWord + letter;
+  }
+  return pWord;
+}
+function createPW2 (priorPWord)
+{
+  var letter = "";
+  var letter2 = String.fromCharCode(65 + Math.floor(Math.random()*26));
+  var letter3 = String.fromCharCode(97 + Math.floor(Math.random()*26));
+  var letter4 = String.fromCharCode(48 + Math.floor(Math.random()*10));
+  var newVal = Math.floor(Math.random()*5); 
+      switch(newVal)
+      {
+        case 0:
+          //Question
+          letter = "?";
+          break;
+        case 1:
+          //Dollar
+          letter = "$";
+          break;
+        case 2:
+        //And
+          letter = "&";
+          break;
+        case 3:
+          //Hashtag
+          letter = "#";
+          break;
+        case 4:
+          //Exclamation
+          letter = "!";
+          break;
+      }
+  var total = priorPWord + letter + letter3 + letter2 + letter4;
+  return total;
+}
+function printPassword()
+{
+	document.getElementById("demo").innerHTML = createPW2(createPW());
+}
+function storePassword()
+{
+	var acct = document.getElementById("acct").value;
+	var uname = document.getElementById("uname").value;
+	var pword = document.getElementById("pword").value;
+	arrayize(acct, uname, pword);
+	alert("Account: " + acct + " Username: " + uname + " Password: " + pword + " Account Stored!");
+}
+var acctArray = [];
+var userArray = [];
+var passArray = [];
+function arrayize(account, user, pass)
+{
+  var acctVal = "Account: " + account;
+  var userVal = " Username: " + user;
+  var passVal =  " Password: " + pass;
+  acctArray.push(acctVal);
+  userArray.push(userVal);
+  passArray.push(passVal);
+  return acctArray;
+  return userArray;
+}
+var table;
+function tableize()
+{
+	table = document.createElement("table")
+	for (var i = 0; i < acctArray.length; i++)
+	{
+		var row = table.insertRow(-1);
+		var accountCell = row.insertCell(-1);
+		accountCell.appendChild(document.createTextNode(acctArray[i]));
+		var userCell = row.insertCell(-1);
+		userCell.appendChild(document.createTextNode(userArray[i]));
+		var passCell = row.insertCell(-1);
+		passCell.appendChild(document.createTextNode(passArray[i]));
+		document.body.appendChild(table);
+		state = false;
+	}
+	
+}
+function untable()
+{
+	document.body.removeChild(table);
+	table = null;
+}
+function openPasswordStrength()
+{
+	window.open("http://www.passwordmeter.com/");
+}
+</script>
+</head>
+<body bgcolor="#b0b0ba">
+<button id="generator" align="center" type="button" onclick="printPassword()">Generate Password</button>
+<p align="center" id="demo"> </p>
+<form autocomplete="off">
+	Add an Account: <br>
+	<input type="text" name="acctN" id="acct"><br>
+	Add a Username: <br>
+	<input type="text" name="unameN" id="uname"><br>
+	Add a Password: <br>
+	<input type="text" name="pwordN" id="pword"><br>
+	<input type="button" value="Store" onclick="storePassword();untable()">
+	<input type="button" value="Check Strength" onClick="openPasswordStrength()">
+</form>
+<button id="tableMaker" align="center" type="button" onclick="tableize()">Show Table</button>
+<p align="center" id="stop"></p>
+<p align="center" id="usP"></p>
+<p align="center" id="pwP"></p>
+
+<button id="tableRemover" align="center" type="button" onClick="untable()">Hide Table</button>
+
+<p align="center" id="tag"><em> A FiveForty Project</em></p>
+</body>
+</html>
